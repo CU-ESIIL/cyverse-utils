@@ -1,6 +1,7 @@
 import os
 import shutil
 from kubernetes import client, config
+from kubernetes.stream import stream
 
 
 class KubernetesAPI:
@@ -29,7 +30,8 @@ class KubernetesAPI:
             if recursive:
                 command.insert(1, '-r')
 
-            resp = self.v1.connect_get_namespaced_pod_exec(
+            resp = stream(
+                self.v1.connect_get_namespaced_pod_exec,
                 pod.metadata.name,
                 pod.metadata.namespace,
                 command=command,
