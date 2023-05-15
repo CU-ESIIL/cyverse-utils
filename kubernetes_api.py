@@ -42,7 +42,7 @@ class KubernetesAPI:
             )
 
             # Check if the file was copied successfully
-            if resp.exit_code == 0:
-                print(f"File copied to {pod.metadata.name}")
-            else:
-                print(f"Failed to copy file to {pod.metadata.name}")
+            # if resp.exit_code == 0:
+            #     print(f"File copied to {pod.metadata.name}")
+            # else:
+            #     print(f"Failed to copy file to {pod.metadata.name}")
