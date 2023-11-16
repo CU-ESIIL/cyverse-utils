@@ -25,14 +25,21 @@ configure <- function() {
 
   system2("git", args = c("config", "--global", "user.name", username))
   system2("git", args = c("config", "--global", "user.email", email))
+    
+  # Define the path to the .ssh directory in the user's home directory
+  ssh_dir <- file.path(Sys.getenv("HOME"), ".ssh")
+
+  # Check if the directory exists, and if not, create it
+  if (!dir.exists(ssh_dir)) {
+    dir.create(ssh_dir, recursive = TRUE)
+  }
 
   # Generate Ed25519 keypair
-  ssh_dir <- path.expand("~/.ssh")
   key_name <- "github"
   private_key_path <- file.path(ssh_dir, key_name)
   public_key_path <- paste0(private_key_path, ".pub")
 
-  system2("ssh-keygen", args = c("-t", "ed25519", "-f", private_key_path, "-N", ""))
+  system2("ssh-keygen", args = c("-t", "ed25519", "-f", private_key_path, "-N", '""'))
 
   # Update SSH config
   config_file <- file.path(ssh_dir, "config")
